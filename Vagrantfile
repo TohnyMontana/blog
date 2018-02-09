@@ -8,6 +8,6 @@ Vagrant.configure("2") do |config|
     vb.memory = "1024"
   end
 
-  config.vm.provision "shell", path: '\scripts\post-install.sh', privileged: true, run: "once"
+  config.vm.provision "shell", path: 'scripts/post-install.sh', privileged: true, run: "once"
 
 end
