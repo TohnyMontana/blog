@@ -1,6 +1,6 @@
 Vagrant.configure("2") do |config|
 
-  config.vm.box = "centos/7"
+  config.vm.box = "puppetlabs/centos-7.2-64-nocm"
   config.vm.network "private_network", ip: "192.168.50.10"
   config.vm.synced_folder ".", "/var/www"
 
