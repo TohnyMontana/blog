@@ -3,6 +3,10 @@
   "description": "the best blog in the world",
   "homepage": "https://github.com/TohnyMontana/blog",
   "license": "MIT",
+  "require": {
+    "psr/http-server-handler": "~1.0.0",
+    "symfony/psr-http-message-bridge": "~1.0.2"
+  },
   "require-dev": {
     "phpunit/phpunit": "~7.0.1"
   }
