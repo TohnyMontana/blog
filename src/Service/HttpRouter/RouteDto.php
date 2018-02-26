@@ -3,74 +3,56 @@ declare(strict_types=1);
 
 namespace TohnyMontana\blog\Service\HttpRouter;
 
-use http\Exception\InvalidArgumentException;
-
 class RouteDto
 {
+    public const GET     = "GET";
+    public const POST    = "POST";
+    public const PUT     = "PUT";
+    public const DELETE  = "DELETE";
+    public const HEAD    = "HEAD";
+    public const OPTIONS = "OPTIONS";
+
     /** @var string */
     private $name;
     /** @var string */
     private $path;
     /** @var string */
     private $method;
-    /** @var Callable */
+    /** @var \Closure */
     private $handler;
-
-    /** @var string */
-    public const GET = "GET";
-    /** @var string */
-    public const POST = "POST";
-    /** @var string */
-    public const PUT = "PUT";
-    /** @var string */
-    public const DELETE = "DELETE";
-    /** @var string */
-    public const HEAD = "HEAD";
-    /** @var string */
-    public const OPTIONS = "OPTIONS";
+    /** @var string[] */
+    private $methodsArr = [
+        self::GET,
+        self::POST,
+        self::PUT,
+        self::HEAD,
+        self::OPTIONS,
+        self::DELETE
+    ];
 
     public function __construct(
         string $name,
         string $path,
         string $method,
-        Callable $handler
+        \Closure $handler
     ) {
-        if (strlen($name) !== 0) {
-            $this->name = $name;
-        } else {
-            throw new InvalidArgumentException('аргумет конструктора $name, класса RouteDto,
-             должен быть не пустой строкой'
+        if (empty($name)) {
+            throw new ArgumentException('Argument "$name" must be not empty');
+        } elseif (empty($path)) {
+            throw new ArgumentException('Argument "$path" must be not empty');
+        } elseif (in_array($method, $this->methodsArr, true)) {
+            throw new ArgumentException('Argument "$method" must be HTTP method:
+             GET/POST/PUT...'
+            );
+        } elseif (empty($handler)) {
+            throw new ArgumentException('Argument "$handler" must be not empty'
             );
         }
 
-        if (strlen($path) !== 0) {
-            $this->path = $path;
-        } else {
-            throw new InvalidArgumentException('аргумет конструктора $path, класса RouteDto,
-             должен быть не пустой строкой'
-            );
-        }
-
-        if (strlen($method) !== 0 && $method === self::GET ||
-            $method === self::POST ||
-            $method === self::PUT ||
-            $method === self::HEAD ||
-            $method === self::OPTIONS ||
-            $method === self::DELETE) {
-            $this->method = $method;
-        } else {
-            throw new InvalidArgumentException('аргумет конструктора $method, класса RouteDto,
-             должен быть HTTP метод: GET/POST/PUT... строкового типа'
-            );
-        }
-
-        if (!empty($handler) && is_callable($handler)) {
-            $this->handler = $handler;
-        } else {
-            throw new InvalidArgumentException('аргумет конструктора $handler, класса RouteDto,
-             должен быть не пустой объект типа \Callable'
-            );
-        }
+        $this->name    = $name;
+        $this->path    = $path;
+        $this->method  = $method;
+        $this->handler = $handler;
     }
 
     public function getName(): string
@@ -88,7 +70,7 @@ class RouteDto
         return $this->method;
     }
 
-    public function getHandler(): Callable
+    public function getHandler(): \Closure
     {
         return $this->handler;
     }

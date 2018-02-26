@@ -7,10 +7,10 @@ class Router
 {
     /** @var RouteDto[] */
     private $routes = [];
-    /** @var Callable */
+    /** @var \Closure */
     private $defaultHandler;
 
-    public function __construct(Callable $defaultHandler, RouteDto $routes)
+    public function __construct(\Closure $defaultHandler, RouteDto ...$routes)
     {
         $this->defaultHandler = $defaultHandler;
 
