@@ -1,47 +1,71 @@
 <?php
+declare(strict_types=1);
 
-namespace Router;
+namespace TohnyMontana\blog\Service\HttpRouter;
 
 class RouterFactory
 {
-    private $routes = array();
+    /** @var RouteDto[] */
+    private $routes = [];
+    /** @var Callable */
+    private $defaultRote;
 
-    public function get($name, $path, $handler): self
+    public function get(string $name, string $path, Callable $handler): self
     {
-        $this->routes += new HttpRouteDto($name, $path,"GET", $handler);
-        // не понимаю, возвращать просто новый обьект класса RouterFactory ?
+        $this->routes[] = new RouteDto($name, $path, "GET", $handler);
+
+        return $this;
     }
 
-    public function post($name, $path, $handler): self
+    public function post(string $name, string $path, Callable $handler): self
     {
-        $this->routes += new HttpRouteDto($name, $path,"POST", $handler);
+        $this->routes[] = new RouteDto($name, $path, "POST", $handler);
+
+        return $this;
     }
 
-    public function put($name, $path, $handler): self
+    public function put(string $name, string $path, Callable $handler): self
     {
-        $this->routes += new HttpRouteDto($name, $path,"PUT", $handler);
+        $this->routes[] = new RouteDto($name, $path, "PUT", $handler);
+
+        return $this;
     }
 
-    public function delete($name, $path, $handler): self
+    public function delete(string $name, string $path, Callable $handler): self
     {
-        $this->routes += new HttpRouteDto($name, $path,"DELETE", $handler);
+        $this->routes[] = new RouteDto($name, $path, "DELETE", $handler);
+
+        return $this;
     }
 
-    //  не знаю какие свойства  должены быть у роута по умолчанию а именно (имя, путь, метод, хендлер)
-    // и сохранять его вместе со всеми роутами или отдельное поле $defaultRote
-    public function setDefaultRoute()
+    public function head(string $name, string $path, Callable $handler): self
     {
+        $this->routes[] = new RouteDto($name, $path, "HEAD", $handler);
 
+        return $this;
     }
 
-    public function create()
+    public function options(string $name, string $path, Callable $handler): self
     {
-        // не знаю какой хендлер должен идти в конструктор первым аргументом
-        $router = new Router("", $this->routes);
+        $this->routes[] = new RouteDto($name, $path, "OPTIONS", $handler);
+
+        return $this;
     }
 
-    public function clear()
+    public function setDefaultHandler(Callable $defaultRote): void
     {
-        $this->routes = array();
+        $this->defaultRote = $defaultRote;
+    }
+
+    public function create(): Router
+    {
+        $router = new Router($this->defaultRote, $this->routes[]);
+
+        return $router;
+    }
+
+    public function clear(): void
+    {
+        $this->routes = [];
     }
 }
