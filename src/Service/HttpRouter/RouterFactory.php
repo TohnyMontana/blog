@@ -12,42 +12,42 @@ class RouterFactory
 
     public function get(string $name, string $path, \Closure $handler): self
     {
-        $this->routes[] = new RouteDto($name, $path, "GET", $handler);
+        $this->routes[] = new RouteDto($name, $path, RouteDto::GET, $handler);
 
         return $this;
     }
 
     public function post(string $name, string $path, \Closure $handler): self
     {
-        $this->routes[] = new RouteDto($name, $path, "POST", $handler);
+        $this->routes[] = new RouteDto($name, $path, RouteDto::POST, $handler);
 
         return $this;
     }
 
     public function put(string $name, string $path, \Closure $handler): self
     {
-        $this->routes[] = new RouteDto($name, $path, "PUT", $handler);
+        $this->routes[] = new RouteDto($name, $path, RouteDto::PUT, $handler);
 
         return $this;
     }
 
     public function delete(string $name, string $path, \Closure $handler): self
     {
-        $this->routes[] = new RouteDto($name, $path, "DELETE", $handler);
+        $this->routes[] = new RouteDto($name, $path, RouteDto::DELETE, $handler);
 
         return $this;
     }
 
     public function head(string $name, string $path, \Closure $handler): self
     {
-        $this->routes[] = new RouteDto($name, $path, "HEAD", $handler);
+        $this->routes[] = new RouteDto($name, $path, RouteDto::HEAD, $handler);
 
         return $this;
     }
 
     public function options(string $name, string $path, \Closure $handler): self
     {
-        $this->routes[] = new RouteDto($name, $path, "OPTIONS", $handler);
+        $this->routes[] = new RouteDto($name, $path, RouteDto::OPTIONS, $handler);
 
         return $this;
     }
@@ -59,9 +59,7 @@ class RouterFactory
 
     public function create(): Router
     {
-        $router = new Router($this->defaultRote, $this->routes);
-
-        return $router;
+        return new Router($this->defaultRote, $this->routes);
     }
 
     public function clear(): void

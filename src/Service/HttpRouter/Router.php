@@ -15,14 +15,17 @@ class Router
         $this->defaultHandler = $defaultHandler;
 
         foreach ($routes as $RouteDto) {
-
             foreach ($this->routes as $route) {
-
-                if ($RouteDto->getName() === $route->getName()) {
-                    throw new DuplicateRouteException("this name is already in use");
-                } elseif ($RouteDto->getPath() === $route->getPath()
-                    && $RouteDto->getMethod() === $route->getMethod()) {
-                    throw new DuplicateRouteException("this path and Method is already in use");
+                if (
+                    ($RouteDto->getName() === $route->getName()) ||
+                    ($RouteDto->getPath() === $route->getPath()) &&
+                    ($RouteDto->getMethod() === $route->getMethod())
+                ) {
+                    throw new DuplicateRouteException(
+                        $RouteDto->getName(),
+                        $RouteDto->getPath(),
+                        $RouteDto->getMethod()
+                    );
                 }
             }
 

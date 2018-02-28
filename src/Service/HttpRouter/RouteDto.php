@@ -5,12 +5,12 @@ namespace TohnyMontana\blog\Service\HttpRouter;
 
 class RouteDto
 {
-    public const GET     = "GET";
-    public const POST    = "POST";
-    public const PUT     = "PUT";
-    public const DELETE  = "DELETE";
-    public const HEAD    = "HEAD";
-    public const OPTIONS = "OPTIONS";
+    public const GET     = 'GET';
+    public const POST    = 'POST';
+    public const PUT     = 'PUT';
+    public const DELETE  = 'DELETE';
+    public const HEAD    = 'HEAD';
+    public const OPTIONS = 'OPTIONS';
 
     /** @var string */
     private $name;
@@ -21,7 +21,7 @@ class RouteDto
     /** @var \Closure */
     private $handler;
     /** @var string[] */
-    private $methodsArr = [
+    public const ALLOWED_METHODS = [
         self::GET,
         self::POST,
         self::PUT,
@@ -37,16 +37,13 @@ class RouteDto
         \Closure $handler
     ) {
         if (empty($name)) {
-            throw new ArgumentException('Argument "$name" must be not empty');
+            throw new InvalidNotEmptyException($name);
         } elseif (empty($path)) {
-            throw new ArgumentException('Argument "$path" must be not empty');
+            throw new InvalidNotEmptyException($path);
         } elseif (in_array($method, $this->methodsArr, true)) {
-            throw new ArgumentException('Argument "$method" must be HTTP method:
-             GET/POST/PUT...'
-            );
+            throw new ValueNotInArrayException('method', $method, $this->methodsArr);
         } elseif (empty($handler)) {
-            throw new ArgumentException('Argument "$handler" must be not empty'
-            );
+            throw new InvalidNotEmptyException($handler);
         }
 
         $this->name    = $name;
