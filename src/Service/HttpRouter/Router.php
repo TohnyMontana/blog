@@ -18,6 +18,7 @@ class Router
             $addName   = $routeDto->getName();
             $addPath   = $routeDto->getPath();
             $addMethod = $routeDto->getMethod();
+
             foreach ($this->routes as $route) {
                 $name   = $route->getName();
                 $path   = $route->getPath();
