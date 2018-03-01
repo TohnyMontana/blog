@@ -15,11 +15,9 @@ class Router
         $this->defaultHandler = $defaultHandler;
 
         foreach ($routes as $routeDto) {
-
             $addName   = $routeDto->getName();
             $addPath   = $routeDto->getPath();
             $addMethod = $routeDto->getMethod();
-
             foreach ($this->routes as $route) {
 
                 $name   = $route->getName();
