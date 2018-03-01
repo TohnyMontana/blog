@@ -1,18 +1,12 @@
 <?php
+declare(strict_types=1);
 
 namespace TohnyMontana\blog\Exception;
 
 class InvalidNotArrayException extends ArgumentException
 {
-    /**
-     * @param string $variableName
-     * @throws InvalidStringException
-     */
-    public function __construct($variableName)
+    public function __construct(string $variableName)
     {
-        if (!is_string($variableName)) {
-            throw new InvalidStringException('variableName', $variableName);
-        }
         parent::__construct(
             sprintf(
                 'Variable "$%s" must be "not array"',

@@ -14,22 +14,24 @@ class Router
     {
         $this->defaultHandler = $defaultHandler;
 
-        foreach ($routes as $RouteDto) {
+        foreach ($routes as $routeDto) {
+
+            $addName   = $routeDto->getName();
+            $addPath   = $routeDto->getPath();
+            $addMethod = $routeDto->getMethod();
+
             foreach ($this->routes as $route) {
-                if (
-                    ($RouteDto->getName() === $route->getName()) ||
-                    ($RouteDto->getPath() === $route->getPath()) &&
-                    ($RouteDto->getMethod() === $route->getMethod())
-                ) {
-                    throw new DuplicateRouteException(
-                        $RouteDto->getName(),
-                        $RouteDto->getPath(),
-                        $RouteDto->getMethod()
-                    );
+
+                $name   = $route->getName();
+                $path   = $route->getPath();
+                $method = $route->getMethod();
+
+                if (($addName === $name) || (($addPath === $path) && ($addMethod === $method))) {
+                    throw new DuplicateRouteException($addName, $addPath, $addMethod);
                 }
             }
 
-            $this->routes[] = $RouteDto;
+            $this->routes[] = $routeDto;
         }
     }
 

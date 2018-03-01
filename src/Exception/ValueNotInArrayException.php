@@ -1,23 +1,12 @@
 <?php
+declare(strict_types=1);
 
 namespace TohnyMontana\blog\Exception;
 
 class ValueNotInArrayException extends ArgumentException
 {
-    /**
-     * @param string $variableName
-     * @param mixed  $variableValue
-     * @param array  $array
-     * @throws InvalidArrayException
-     * @throws InvalidStringException
-     */
-    public function __construct($variableName, $variableValue, $array)
+    public function __construct(string $variableName, $variableValue, array $array)
     {
-        if (!is_string($variableName)) {
-            throw new InvalidStringException('variableName', $variableName);
-        } elseif (!is_array($array)) {
-            throw new InvalidArrayException('array', $array);
-        }
         parent::__construct(
             sprintf(
                 'Variable "$%s" must be "in array" {%s}, actual value: "%s"',

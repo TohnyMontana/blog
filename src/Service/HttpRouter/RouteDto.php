@@ -12,15 +12,6 @@ class RouteDto
     public const HEAD    = 'HEAD';
     public const OPTIONS = 'OPTIONS';
 
-    /** @var string */
-    private $name;
-    /** @var string */
-    private $path;
-    /** @var string */
-    private $method;
-    /** @var \Closure */
-    private $handler;
-    /** @var string[] */
     public const ALLOWED_METHODS = [
         self::GET,
         self::POST,
@@ -29,6 +20,15 @@ class RouteDto
         self::OPTIONS,
         self::DELETE
     ];
+
+    /** @var string */
+    private $name;
+    /** @var string */
+    private $path;
+    /** @var string */
+    private $method;
+    /** @var \Closure */
+    private $handler;
 
     public function __construct(
         string $name,
@@ -40,10 +40,8 @@ class RouteDto
             throw new InvalidNotEmptyException($name);
         } elseif (empty($path)) {
             throw new InvalidNotEmptyException($path);
-        } elseif (in_array($method, $this->methodsArr, true)) {
-            throw new ValueNotInArrayException('method', $method, $this->methodsArr);
-        } elseif (empty($handler)) {
-            throw new InvalidNotEmptyException($handler);
+        } elseif (in_array($method, self::ALLOWED_METHODS, true)) {
+            throw new ValueNotInArrayException('method', $method, self::ALLOWED_METHODS);
         }
 
         $this->name    = $name;

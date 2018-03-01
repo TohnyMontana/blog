@@ -1,20 +1,13 @@
 <?php
+declare(strict_types=1);
 
 namespace TohnyMontana\blog\Exception;
 
 class InvalidStringException extends ArgumentException
 {
-    /**
-     * @param string                             $variableName
-     * @param array|bool|float|int|null|resource $variableValue
-     * @throws InvalidNotStringException
-     * @throws InvalidStringException
-     */
-    public function __construct($variableName, $variableValue)
+    public function __construct(string $variableName, $variableValue)
     {
-        if (!is_string($variableName)) {
-            throw new InvalidStringException('variableName', $variableName);
-        } elseif (is_string($variableValue)) {
+        if (is_string($variableValue)) {
             throw new InvalidNotStringException('variableValue');
         }
         parent::__construct(
