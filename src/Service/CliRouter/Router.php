@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace TohnyMontana\blog\Service\CliRouter;
 
+use TohnyMontana\blog\Exception\DuplicateCliRouteException;
+
 class Router
 {
     /** @var RouteDto[] */
@@ -17,16 +19,13 @@ class Router
         foreach ($routes as $routeDto) {
             $addName      = $routeDto->getName();
             $addRouteName = $routeDto->getRouteName();
-            $addMethod    = $routeDto->getMethod();
-
 
             foreach ($this->routes as $route) {
                 $name      = $route->getName();
                 $routeName = $route->getRouteName();
-                $method    = $route->getMethod();
 
-                if (($addName === $name) || ($addRouteName === $routeName) && ($addMethod === $method)) {
-                    throw new \Exception();
+                if (($addName === $name) && ($addRouteName === $routeName)) {
+                    throw new DuplicateCliRouteException($addName, $addRouteName);
                 }
             }
         }
@@ -34,14 +33,16 @@ class Router
         $this->routes[] = $routes;
     }
 
-    public function resolve(ServerRequestInterface $request): RequestHandlerInterface
+    public function resolve(CliRequestInterface $request): HandlerInterface
     {
-        $method = $request->getMethod();
+        $addName = $request->getName();
 
-        foreach ($this->routes as $route) {
-            if ($route->getMethod() === $method) {
-                return $route->getHandler();
-            }
+        foreach ($this->routes as $routeDto){
+           $name = $routeDto->getName();
+
+           if ($addName === $name){
+               return $routeDto->getHandler();
+           }
         }
 
         return $this->defaultHandler;

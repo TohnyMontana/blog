@@ -10,46 +10,9 @@ class RouterFactory
     /** @var \Closure */
     private $defaultRote;
 
-    public function get(string $name, string $routeName, \Closure $handler): self
+    public function add(RouteDto $routeDto): void
     {
-        $this->routes = new RouteDto($name, $routeName, RouteDto::GET, $handler);
-
-        return $this;
-    }
-
-    public function post(string $name, string $routeName, \Closure $handler): self
-    {
-        $this->routes = new RouteDto($name, $routeName, RouteDto::POST, $handler);
-
-        return $this;
-    }
-
-    public function put(string $name, string $routeName, \Closure $handler): self
-    {
-        $this->routes = new RouteDto($name, $routeName, RouteDto::PUT, $handler);
-
-        return $this;
-    }
-
-    public function delete(string $name, string $routeName, \Closure $handler): self
-    {
-        $this->routes = new RouteDto($name, $routeName, RouteDto::DELETE, $handler);
-
-        return $this;
-    }
-
-    public function head(string $name, string $routeName, \Closure $handler): self
-    {
-        $this->routes = new RouteDto($name, $routeName, RouteDto::HEAD, $handler);
-
-        return $this;
-    }
-
-    public function options(string $name, string $routeName, \Closure $handler): self
-    {
-        $this->routes = new RouteDto($name, $routeName, RouteDto::OPTIONS, $handler);
-
-        return $this;
+        $this->routes[] = $routeDto;
     }
 
     public function setDefaultHandler(\Closure $defaultRote): void

@@ -5,5 +5,5 @@ namespace TohnyMontana\blog\Service\CliRouter;
 
 interface HandlerInterface
 {
-    function handle(InputInterface $input, OutputInterface $output): void;
+    function handle(CliRequestInterface $cliRequest, OutputInterface $output): void;
 }
