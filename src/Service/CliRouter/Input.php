@@ -10,9 +10,9 @@ class Input implements CliRequestInterface
     /** @var string[] */
     private $options = [];
 
-    public function __construct(string $name, string $options)
+    public function __construct(string $name, array $options)
     {
-        $options = $this->optionsValidation($options);
+        $this->optionsValidation($options);
 
         $this->name      = $name;
         $this->options[] = $options;
@@ -34,17 +34,16 @@ class Input implements CliRequestInterface
         return $default;
     }
 
-    private function optionsValidation(string $arr): array
+    private function optionsValidation(array $arr): void
     {
-        $arr    = array_filter(array_keys($arr), 'is_string');
-        $newArr = [];
-
-        foreach ($arr as $item) {
-            if (is_string($item) || (is_null($item))) {
-                $newArr[] = $item;
-            }
+        if (count(array_filter(array_keys($arr), 'is_int')) > 0) {
+            throw new InvalidKeyOrValueAssociativeArrayException();
         }
 
-        return $newArr;
+        foreach ($arr as $item) {
+            if (!(is_string($item) || is_null($item))) {
+                throw new InvalidKeyOrValueAssociativeArrayException();
+            }
+        }
     }
 }
