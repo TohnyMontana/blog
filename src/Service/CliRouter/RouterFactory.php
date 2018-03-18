@@ -10,9 +10,9 @@ class RouterFactory
     /** @var \Closure */
     private $defaultRote;
 
-    public function add(RouteDto $routeDto): void
+    public function addRoute(string $name, string $routeName, \Closure $handler): void
     {
-        $this->routes[] = $routeDto;
+        $this->routes[] = new RouteDto($name, $routeName, $handler);
     }
 
     public function setDefaultHandler(\Closure $defaultRote): void

@@ -33,16 +33,16 @@ class Router
         $this->routes[] = $routes;
     }
 
-    public function resolve(CliRequestInterface $request): HandlerInterface
+    public function resolve(CliRequestInterface $request): \Closure
     {
         $addName = $request->getName();
 
-        foreach ($this->routes as $routeDto){
-           $name = $routeDto->getName();
+        foreach ($this->routes as $routeDto) {
+            $name = $routeDto->getName();
 
-           if ($addName === $name){
-               return $routeDto->getHandler();
-           }
+            if ($addName === $name) {
+                return $routeDto->getHandler();
+            }
         }
 
         return $this->defaultHandler;

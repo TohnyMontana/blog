@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace TohnyMontana\blog\Exception;
 
-class InvalidNotArrayException extends ArgumentException
+class InvalidNotArrayException extends \InvalidArgumentException
 {
     public function __construct(string $variableName)
     {

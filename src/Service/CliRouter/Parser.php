@@ -11,29 +11,23 @@ class Parser
         $options = [];
 
         foreach ($argv as $arg) {
-            // --foo --bar=baz
             if (substr($arg, 0, 2) == '--') {
                 $eqPos = strpos($arg, '=');
-                // --foo
                 if ($eqPos === false) {
                     $key           = substr($arg, 2);
                     $value         = isset($options[$key]) ? $options[$key] : true;
                     $options[$key] = $value;
-                } // --bar=baz
-                else {
+                } else {
                     $key           = substr($arg, 2, $eqPos - 2);
                     $value         = substr($arg, $eqPos + 1);
                     $options[$key] = $value;
                 }
-            } // -k=value -abc
-            else if (substr($arg, 0, 1) == '-') {
-                // -k=value
+            } elseif (substr($arg, 0, 1) == '-') {
                 if (substr($arg, 2, 1) == '=') {
                     $key           = substr($arg, 1, 1);
                     $value         = substr($arg, 3);
                     $options[$key] = $value;
-                } // -abc
-                else {
+                } else {
                     $chars = str_split(substr($arg, 1));
 
                     foreach ($chars as $char) {
@@ -42,8 +36,7 @@ class Parser
                         $options[$key] = $value;
                     }
                 }
-            } // plain-arg
-            else {
+            } else {
                 $value     = $arg;
                 $options[] = $value;
             }

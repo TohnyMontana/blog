@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace TohnyMontana\blog\Exception;
 
-class InvalidStringException extends ArgumentException
+class InvalidStringException extends \InvalidArgumentException
 {
     public function __construct(string $variableName, $variableValue)
     {

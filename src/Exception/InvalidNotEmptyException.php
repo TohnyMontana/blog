@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace TohnyMontana\blog\Exception;
 
-class InvalidNotEmptyException extends ArgumentException
+class InvalidNotEmptyException extends \InvalidArgumentException
 {
     public function __construct(string $variableName)
     {

@@ -3,6 +3,9 @@ declare(strict_types=1);
 
 namespace TohnyMontana\blog\Service\HttpRouter;
 
+use Psr\Http\Message\ServerRequestInterface;
+use TohnyMontana\blog\Exception\DuplicateRouteException;
+
 class Router
 {
     /** @var RouteDto[] */
@@ -33,7 +36,7 @@ class Router
         }
     }
 
-    public function resolve(ServerRequestInterface $request): RequestHandlerInterface
+    public function resolve(ServerRequestInterface $request): \Closure
     {
         $method = $request->getMethod();
         $uri    = $request->getUri();

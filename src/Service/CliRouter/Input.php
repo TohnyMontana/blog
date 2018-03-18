@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace TohnyMontana\blog\Service\CliRouter;
 
+use TohnyMontana\blog\Exception\InvalidKeyOrValueAssociativeArrayException;
+
 class Input implements CliRequestInterface
 {
     /** @var string */
@@ -12,7 +14,13 @@ class Input implements CliRequestInterface
 
     public function __construct(string $name, array $options)
     {
-        $this->optionsValidation($options);
+        foreach ($options as $key => $value) {
+            if (!is_string($key)) {
+                throw new InvalidKeyOrValueAssociativeArrayException();
+            } elseif (!is_string($value) && !is_null($value)) {
+                throw new InvalidKeyOrValueAssociativeArrayException();
+            }
+        }
 
         $this->name      = $name;
         $this->options[] = $options;
@@ -25,25 +33,10 @@ class Input implements CliRequestInterface
 
     public function get(string $optionName, string $default = null): ?string
     {
-        foreach ($this->options as $option) {
-            if ($optionName === $option) {
-                return $option;
-            }
+        if (array_key_exists($optionName, $this->options)) {
+            return $this->options[$optionName];
         }
 
         return $default;
-    }
-
-    private function optionsValidation(array $arr): void
-    {
-        if (count(array_filter(array_keys($arr), 'is_int')) > 0) {
-            throw new InvalidKeyOrValueAssociativeArrayException();
-        }
-
-        foreach ($arr as $item) {
-            if (!(is_string($item) || is_null($item))) {
-                throw new InvalidKeyOrValueAssociativeArrayException();
-            }
-        }
     }
 }

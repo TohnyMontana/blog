@@ -20,9 +20,9 @@ class RouteDto
         \Closure $handler
     ) {
         if (empty($name)) {
-            throw new InvalidNotEmptyException($name);
+            throw new Exception\InvalidNotEmptyException($name);
         } elseif (empty($routeName)) {
-            throw new InvalidNotEmptyException($routeName);
+            throw new Exception\InvalidNotEmptyException($routeName);
         }
 
         $this->name      = $name;

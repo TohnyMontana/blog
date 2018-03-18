@@ -5,7 +5,7 @@ namespace TohnyMontana\blog\Service\CliRouter;
 
 interface CliRequestInterface
 {
-    function getName(): string;
+    public function getName(): string;
 
-    function get(string $optionName, string $default = null): ?string;
+    public function get(string $optionName, string $default = null): ?string;
 }

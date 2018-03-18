@@ -5,9 +5,9 @@ namespace TohnyMontana\blog\Service\CliRouter;
 
 interface OutputInterface
 {
-    function write(): void;
+    public function write(): void;
 
-    function writeLn(): void;
+    public function writeLn(): void;
 
-    function printf(string $message, ...$arguments): void;
+    public function printf(string $message, ...$arguments): void;
 }

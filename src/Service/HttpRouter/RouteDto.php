@@ -3,6 +3,9 @@ declare(strict_types=1);
 
 namespace TohnyMontana\blog\Service\HttpRouter;
 
+use TohnyMontana\blog\Exception\InvalidNotEmptyException;
+use TohnyMontana\blog\Exception\ValueNotInArrayException;
+
 class RouteDto
 {
     public const GET     = 'GET';
