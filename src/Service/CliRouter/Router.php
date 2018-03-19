@@ -35,12 +35,12 @@ class Router
 
     public function resolve(CliRequestInterface $request): \Closure
     {
-        $addName = $request->getName();
+        $requestName = $request->getName();
 
         foreach ($this->routes as $routeDto) {
             $name = $routeDto->getName();
 
-            if ($addName === $name) {
+            if ($requestName === $name) {
                 return $routeDto->getHandler();
             }
         }

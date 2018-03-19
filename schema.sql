@@ -9,8 +9,8 @@ CREATE TABLE IF NOT EXISTS `article` (
   PRIMARY KEY (`id`),
   KEY `userId` (`userId`)
 )
-  ENGINE=InnoDB 
-  DEFAULT CHARSET=utf8;
+  ENGINE = InnoDB
+  DEFAULT CHARSET = `utf8`;
 
 CREATE TABLE IF NOT EXISTS `user` (
   `id`           INT           UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -27,6 +27,6 @@ CREATE TABLE IF NOT EXISTS `user` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `login` (`login`),
   UNIQUE KEY `email` (`email`)
-)  
-  ENGINE=InnoDB 
-  DEFAULT CHARSET=utf8;
+)
+  ENGINE = InnoDB
+  DEFAULT CHARSET = `utf8`;
