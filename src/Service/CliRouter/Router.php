@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace TohnyMontana\blog\Service\CliRouter;
 
+use Psr\Http\Server\RequestHandlerInterface;
 use TohnyMontana\blog\Exception\DuplicateCliRouteException;
 
 class Router
@@ -33,7 +34,7 @@ class Router
         $this->routes[] = $routes;
     }
 
-    public function resolve(CliRequestInterface $request): \Closure
+    public function resolve(CliRequestInterface $request): RequestHandlerInterface
     {
         $requestName = $request->getName();
 

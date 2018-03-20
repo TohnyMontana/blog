@@ -10,6 +10,7 @@ class InvalidArrayException extends \InvalidArgumentException
         if (is_array($variableValue)) {
             throw new InvalidNotArrayException('variableValue');
         }
+
         parent::__construct(
             sprintf(
                 'Variable "$%s" must be "array", actual type: "%s"',

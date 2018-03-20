@@ -3,7 +3,8 @@ declare(strict_types=1);
 
 namespace TohnyMontana\blog\Service\CliRouter;
 
-use TohnyMontana\blog\Exception\InvalidKeyOrValueAssociativeArrayException;
+use TohnyMontana\blog\Exception\InvalidStringException;
+use TohnyMontana\blog\Exception\InvalidStringOrNullException;
 
 class Input implements CliRequestInterface
 {
@@ -16,14 +17,17 @@ class Input implements CliRequestInterface
     {
         foreach ($options as $key => $value) {
             if (!is_string($key)) {
-                throw new InvalidKeyOrValueAssociativeArrayException();
+                throw new InvalidStringException('key', $key);
             } elseif (!(is_string($value) || is_null($value))) {
-                throw new InvalidKeyOrValueAssociativeArrayException();
+                throw new InvalidStringOrNullException('value', $value);
             }
         }
 
-        $this->name      = $name;
-        $this->options[] = $options;
+        foreach ($options as $key => $value) {
+            $this->$options[$key] = $value;
+        }
+
+        $this->name = $name;
     }
 
     public function getName(): string
