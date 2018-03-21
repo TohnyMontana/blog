@@ -3,6 +3,10 @@ declare(strict_types=1);
 
 namespace TohnyMontana\blog\Service\HttpRouter;
 
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
+use TohnyMontana\blog\Exception\DuplicateRouteException;
+
 class Router
 {
     /** @var RouteDto[] */
