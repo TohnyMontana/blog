@@ -18,7 +18,7 @@ class Input implements CliRequestInterface
         foreach ($options as $key => $value) {
             if (!is_string($key)) {
                 throw new InvalidStringException('key', $key);
-            } elseif (!(is_string($value) || is_null($value))) {
+            } elseif (!is_string($value) && !is_null($value)) {
                 throw new InvalidStringOrNullException('value', $value);
             }
         }
